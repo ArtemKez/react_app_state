@@ -1,61 +1,19 @@
 import './App.css';
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import TargetComponent from "./components/TargetComponent";
+import users_list from "./data/users_list";
 
-const userDB = [
-    {
-        id: 1,
-        fname: 'Elon'
-    },
-    {
-        id: 2,
-        fname: 'Elen'
-    },
-    {
-        id: 3,
-        fname: 'Tim'
-    },
-    {
-        id: 4,
-        fname: 'Bob'
-    },
-    {
-        id: 5,
-        fname: 'Sasha'
-    },
-    {
-        id: 6,
-        fname: 'Rob'
-    },
-    {
-        id: 7,
-        fname: 'Alex'
-    },
-    {
-        id: 8,
-        fname: 'Rex'
-    },
-];
+const userDB = users_list;
 
-class App extends Component {
+export default function App(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            users: userDB.map((user) => ({...user, isSelected: false}))
-        }
+    let [users, setUsers] = useState(userDB.map((user) => ({...user, isSelected: false})))
+
+    const setUserSelector = (newUsers) => {
+        setUsers(newUsers)
     }
 
-    setUserSelector = (newUsers) => {
-        this.setState({users: newUsers})
-    }
-
-    render() {
-        const {users} = this.state;
-        return <>
-            <TargetComponent users={users} setUserSelector={this.setUserSelector} />
-        </>;
-    }
+    return (
+        <TargetComponent users={users} setUserSelector={setUserSelector}/>
+    );
 }
-
-export default App;
